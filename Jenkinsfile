@@ -12,32 +12,6 @@ DOCKER_TAG = getVersion()
  git 'https://github.com/samiboukthiir/aston.git'
  }
  }
- stage ('Docker Build') {
- steps {
- sh 'docker build -t jmlhmd/image_name:${DOCKER_TAG}.'
- }
- } 
-stage ('DockerHub Push') {
-steps {
- withCredentials([string(credentialsId: 'mydockerhubpassword', variable: 
-'DockerHubPassword')]) {
- sh 'sudo docker login -u jmlhmd -p ${DockerHubPassword}'
- }
- sh 'sudo docker push jmlhmd/image_name:${DOCKER_TAG}'
- }
-} 
-stage ('Deploy') {
- steps{
- sshagent(credentials: ['Vagrant_ssh']) {
- sh "ssh user@Ip_Recette"
- //sh "scp target/hello-world-app-1.0-SNAPSHOT.jar vagrant@192.168.1.201:/home/vagrant"
- sh "ssh user@Ip_Recette ‘sudo docker run “image_name:${DOCKER_TAG}"’”
- } 
- }
- }
  }
 }
-def getVersion(){
- def version = sh returnStdout: true, script: 'git rev-parse --short HEAD'
- return version
-}
+
