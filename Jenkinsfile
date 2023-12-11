@@ -1,8 +1,7 @@
 pipeline {
  agent any
- tools{ jdk 'JDK8' }
+ tools{ jdk 'jdk-17' }
  environment { 
-JAVA_HOME = '/usr/lib/jvm/java-1.8.0-openjdk-amd64'
 DOCKER_TAG = getVersion()
  }
  stages {
